@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UX Color Themes - Webdev Cosmic Archive</title>
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #121d3d;
+      --surface-alt: #1a2a54;
+      --text: #e9f1ff;
+      --muted: #9fb3d9;
+      --primary: #62d0ff;
+      --secondary: #7cffb3;
+      --warn: #ffd166;
+      --danger: #ff6b6b;
+      --ring: rgba(98, 208, 255, 0.35);
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 10%, #162956 0%, var(--bg) 50%, #05070d 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    .header {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .sub {
+      color: var(--muted);
+      max-width: 80ch;
+      margin: 0;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .theme-btn {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .theme-btn:hover,
+    .theme-btn:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .swatches {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px var(--shadow);
+      padding: 18px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(124, 255, 179, 0.12);
+      border: 1px solid rgba(124, 255, 179, 0.35);
+      color: var(--secondary);
+    }
+
+    .orbit-preview {
+      position: relative;
+      min-height: 260px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--surface), var(--surface-alt));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed var(--ring);
+    }
+
+    .ring.r1 { width: 90px; height: 90px; top: 86px; left: 120px; }
+    .ring.r2 { width: 170px; height: 170px; top: 46px; left: 80px; }
+    .ring.r3 { width: 240px; height: 240px; top: 12px; left: 44px; }
+
+    .core-star {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff6cc, var(--warn));
+      top: 118px;
+      left: 152px;
+      box-shadow: 0 0 24px rgba(255, 209, 102, 0.7);
+    }
+
+    .node {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(98, 208, 255, 0.18);
+    }
+
+    .n1 { top: 80px; left: 202px; }
+    .n2 { top: 120px; left: 272px; background: var(--secondary); box-shadow: 0 0 0 6px rgba(124, 255, 179, 0.18); }
+    .n3 { top: 180px; left: 122px; }
+
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .stack {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .chip {
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 10px;
+      padding: 9px 13px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      cursor: default;
+      user-select: none;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #0a152f;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text);
+    }
+
+    .specs {
+      display: grid;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .spec-row strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 920px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="header">
+      <h1>Webdev UX Color Theme Visualizer</h1>
+      <p class="sub">
+        Evaluate palette behavior in a realistic orbit-map context. Each theme is mapped to the same semantic tokens used in the UX specification.
+      </p>
+    </section>
+
+    <section class="theme-grid" id="theme-grid" aria-label="Available themes"></section>
+
+    <section class="layout">
+      <article class="panel hero" aria-label="Interface preview">
+        <div class="hero-top">
+          <h2 id="theme-name">Deep Space Calm</h2>
+          <span class="badge" id="theme-mode">Default</span>
+        </div>
+        <div class="orbit-preview">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <div class="core-star"></div>
+          <div class="node n1"></div>
+          <div class="node n2"></div>
+          <div class="node n3"></div>
+        </div>
+        <p class="meta">
+          Project Node: <strong style="color:var(--text)">Quiz Forge</strong><br />
+          Deterministic demo ends in a non-looping final state with CTA hierarchy preserved.
+        </p>
+        <div class="stack">
+          <span class="chip">Confidence 8/10</span>
+          <span class="chip">Innovation 7/10</span>
+          <span class="chip">WCAG AA</span>
+        </div>
+        <div class="actions">
+          <span class="btn btn-primary">Back to Orbit Map</span>
+          <span class="btn btn-secondary">View Architecture Snapshot</span>
+        </div>
+      </article>
+
+      <article class="panel specs" aria-label="Theme metadata">
+        <h3 style="margin-bottom:4px;">Theme Notes</h3>
+        <div class="spec-row"><strong>Use Case</strong><span id="use-case">Default production direction for balanced atmosphere and clarity.</span></div>
+        <div class="spec-row"><strong>Primary</strong><span id="primary-value">#62D0FF</span></div>
+        <div class="spec-row"><strong>Secondary</strong><span id="secondary-value">#7CFFB3</span></div>
+        <div class="spec-row"><strong>Text Contrast</strong><span id="contrast-note">Body text target >= 4.5:1 against background.</span></div>
+        <div class="spec-row"><strong>Recommendation</strong><span id="recommendation">Use for main Cosmic Archive implementation baseline.</span></div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const themes = [
+      {
+        id: "deep-space-calm",
+        name: "Deep Space Calm",
+        mode: "Default",
+        useCase: "Main production direction for evaluator speed + atmosphere balance.",
+        recommendation: "Recommended baseline for MVP.",
+        contrast: "Strong contrast for labels and CTA states with low visual fatigue.",
+        vars: {
+          bg: "#070B14",
+          surface: "#121D3D",
+          surfaceAlt: "#1A2A54",
+          text: "#E9F1FF",
+          muted: "#9FB3D9",
+          primary: "#62D0FF",
+          secondary: "#7CFFB3",
+          warn: "#FFD166",
+          danger: "#FF6B6B"
+        }
+      },
+      {
+        id: "solar-signal",
+        name: "Solar Signal",
+        mode: "High Energy",
+        useCase: "Use for stronger brand punch in hero-heavy variants.",
+        recommendation: "Best for demo reels and event promotions.",
+        contrast: "Use with restrained yellow text accents to avoid glare.",
+        vars: {
+          bg: "#100C05",
+          surface: "#2B1F0D",
+          surfaceAlt: "#3B2B13",
+          text: "#FFF8E8",
+          muted: "#D9C9A4",
+          primary: "#FFB347",
+          secondary: "#7CFFB3",
+          warn: "#FFE27A",
+          danger: "#FF6B6B"
+        }
+      },
+      {
+        id: "aurora-tech",
+        name: "Aurora Tech",
+        mode: "Neon Alt",
+        useCase: "Expressive option for portfolio refresh or alternate skin.",
+        recommendation: "Good for visual distinction, monitor motion intensity.",
+        contrast: "Keep body copy on dark surfaces; avoid neon text in long paragraphs.",
+        vars: {
+          bg: "#061117",
+          surface: "#0B2733",
+          surfaceAlt: "#113444",
+          text: "#E8FAFF",
+          muted: "#A7D4E3",
+          primary: "#3BE4FF",
+          secondary: "#8BFFB7",
+          warn: "#FFD166",
+          danger: "#FF6E8A"
+        }
+      },
+      {
+        id: "midnight-atlas",
+        name: "Midnight Atlas",
+        mode: "Enterprise",
+        useCase: "Conservative variant for engineering-forward audience mode.",
+        recommendation: "Use in interview mode to maximize readability.",
+        contrast: "Highest long-form readability among all options.",
+        vars: {
+          bg: "#0A0F1F",
+          surface: "#151D35",
+          surfaceAlt: "#1E2948",
+          text: "#EAF0FF",
+          muted: "#B1BCD8",
+          primary: "#8AB4FF",
+          secondary: "#A6F5D0",
+          warn: "#FFDA85",
+          danger: "#FF8A8A"
+        }
+      },
+      {
+        id: "comet-citrus",
+        name: "Comet Citrus",
+        mode: "Bold",
+        useCase: "Experimental direction with higher visual novelty.",
+        recommendation: "Apply selectively to highlights, not full long-form screens.",
+        contrast: "Needs careful QA for yellow-orange combinations.",
+        vars: {
+          bg: "#0E0C12",
+          surface: "#241C2F",
+          surfaceAlt: "#302440",
+          text: "#F5EEFF",
+          muted: "#C9B7DF",
+          primary: "#FFC857",
+          secondary: "#7CFFB3",
+          warn: "#FFE27A",
+          danger: "#FF6B7A"
+        }
+      },
+      {
+        id: "monochrome-pro",
+        name: "Monochrome Pro",
+        mode: "Utility",
+        useCase: "Fallback/low-distraction mode for strict evaluator workflows.",
+        recommendation: "Use when maximizing signal and reducing visual stylization.",
+        contrast: "Strong contrast, lowest cognitive styling overhead.",
+        vars: {
+          bg: "#101215",
+          surface: "#1A1F26",
+          surfaceAlt: "#252C35",
+          text: "#F3F5F8",
+          muted: "#B8C0CC",
+          primary: "#9BD0FF",
+          secondary: "#B7F0D6",
+          warn: "#FFDFA0",
+          danger: "#FFA3A3"
+        }
+      }
+    ];
+
+    const root = document.documentElement;
+    const grid = document.getElementById("theme-grid");
+
+    function applyTheme(theme) {
+      root.style.setProperty("--bg", theme.vars.bg);
+      root.style.setProperty("--surface", theme.vars.surface);
+      root.style.setProperty("--surface-alt", theme.vars.surfaceAlt);
+      root.style.setProperty("--text", theme.vars.text);
+      root.style.setProperty("--muted", theme.vars.muted);
+      root.style.setProperty("--primary", theme.vars.primary);
+      root.style.setProperty("--secondary", theme.vars.secondary);
+      root.style.setProperty("--warn", theme.vars.warn);
+      root.style.setProperty("--danger", theme.vars.danger);
+      root.style.setProperty("--ring", theme.vars.primary + "66");
+
+      document.getElementById("theme-name").textContent = theme.name;
+      document.getElementById("theme-mode").textContent = theme.mode;
+      document.getElementById("use-case").textContent = theme.useCase;
+      document.getElementById("primary-value").textContent = theme.vars.primary;
+      document.getElementById("secondary-value").textContent = theme.vars.secondary;
+      document.getElementById("contrast-note").textContent = theme.contrast;
+      document.getElementById("recommendation").textContent = theme.recommendation;
+    }
+
+    function renderThemeButtons() {
+      themes.forEach((theme, idx) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "theme-btn";
+        button.setAttribute("aria-label", "Apply " + theme.name + " theme");
+        button.innerHTML = `
+          <strong>${theme.name}</strong><br>
+          <span style="color:var(--muted); font-size: 13px;">${theme.mode}</span>
+          <div class="swatches">
+            <span class="swatch" style="background:${theme.vars.bg}"></span>
+            <span class="swatch" style="background:${theme.vars.surface}"></span>
+            <span class="swatch" style="background:${theme.vars.primary}"></span>
+            <span class="swatch" style="background:${theme.vars.secondary}"></span>
+          </div>
+        `;
+        button.addEventListener("click", () => applyTheme(theme));
+        if (idx === 0) {
+          button.style.borderColor = "var(--primary)";
+        }
+        grid.appendChild(button);
+      });
+    }
+
+    renderThemeButtons();
+    applyTheme(themes[0]);
+  </script>
+</body>
+</html>
